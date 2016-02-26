@@ -1,8 +1,7 @@
 class Encoders{
-	long RightCount, R_A_SIG=0, R_B_SIG=1;
-	long LeftCount,  L_A_SIG=0, L_B_SIG=1;
-
+	long RightCount, LeftCount;
 	int pinRA, pinRB, pinLA, pinLB;
+	int R_A_SIG=0, R_B_SIG=1, L_A_SIG=0, L_B_SIG=1;
 
 	static Encoders * instance;
 
@@ -70,10 +69,10 @@ class Encoders{
 			instance = this;
 		}
 
-		int getRightCount(){
+		long getRightCount(){
 			return RightCount;
 		}
-		int getLeftCount(){
+		long getLeftCount(){
 			return LeftCount;
 		}
 

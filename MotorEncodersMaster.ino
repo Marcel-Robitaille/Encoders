@@ -1,21 +1,18 @@
 #include "Encoders.h"
-Encoders * Encoders::instances [2] = { NULL, NULL };
-
+Encoders * Encoders::instance = NULL;
 
 // instances of our class
-Encoders right;
-Encoders left;
+Encoders encoders;
 
 void setup (){
 	Serial.begin(9600);
-    right.begin (0, 2, 3);
-    left.begin (1, 0, 1);
+    encoders.begin (0, 1, 2, 3);
 }
 
 void loop (){
 	Serial.print("Right: ");
-    Serial.print(right.getRightCount());
+    Serial.print(encoders.getRightCount());
     Serial.print("		Left: ");
-    Serial.println(left.getLeftCount());
+    Serial.println(encoders.getLeftCount());
     delay(10);
 }

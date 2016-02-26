@@ -1,34 +1,34 @@
 class Encoders{
-    long RightCount, R_A_SIG=0, R_B_SIG=1;
-    long LeftCount,  L_A_SIG=0, L_B_SIG=1;
+	long RightCount, R_A_SIG=0, R_B_SIG=1;
+	long LeftCount,  L_A_SIG=0, L_B_SIG=1;
 
-    int PIN_R_A, PIN_R_B, PIN_L_A, PIN_L_B;
+	int pinRA, pinRB, pinLA, pinLB;
 
-    static Encoders * instance;
+	static Encoders * instance;
 
-    static void R_A_RISE(){
-        if(Encoders::instance != NULL){
-            Encoders::instance->switchPressed(Encoders::instance->getPinRA(), 1);
-        }
-    }
+	static void R_A_RISE(){
+		if(Encoders::instance != NULL){
+			Encoders::instance->switchPressed(Encoders::instance->getPinRA(), 1);
+		}
+	}
 
-    static void R_A_FALL(){
-    	if(Encoders::instance != NULL){
-    		Encoders::instance->switchPressed(Encoders::instance->getPinRA(), 0);
-    	}
-    }
-    
-    static void R_B_RISE(){
-        if(Encoders::instance != NULL){
-            Encoders::instance->switchPressed(Encoders::instance->getPinRB(), 1);
-        }
-    }
+	static void R_A_FALL(){
+		if(Encoders::instance != NULL){
+			Encoders::instance->switchPressed(Encoders::instance->getPinRA(), 0);
+		}
+	}
+	
+	static void R_B_RISE(){
+		if(Encoders::instance != NULL){
+			Encoders::instance->switchPressed(Encoders::instance->getPinRB(), 1);
+		}
+	}
 
-    static void R_B_FALL(){
-    	if(Encoders::instance != NULL){
-    		Encoders::instance->switchPressed(Encoders::instance->getPinRB(), 0);
-    	}
-    }
+	static void R_B_FALL(){
+		if(Encoders::instance != NULL){
+			Encoders::instance->switchPressed(Encoders::instance->getPinRB(), 0);
+		}
+	}
 
 	static void L_A_RISE(){
 		if(Encoders::instance != NULL){
@@ -55,95 +55,97 @@ class Encoders{
 	}
 
 
-    public:
-        void begin (const int pinRA, const int pinRB, const int pinLA, const int pinLB){
-//            pinMode (pin, INPUT_PULLUP);
-                	PIN_R_A = pinA;
-                	PIN_R_B = pinB;
-                    attachInterrupt(pinA, R_A_RISE, RISING);
-                    attachInterrupt(pinB, R_B_RISE, RISING);
+	public:
+		void begin (const int _pinRA, const int _pinRB, const int _pinLA, const int _pinLB){
+			pinRA = _pinRA;
+			pinRB = _pinRB;
 
-                    attachInterrupt(pinA, L_A_RISE, RISING);
-                    attachInterrupt(pinB, L_B_RISE, RISING);
-                    instances = this;
-            }
-        }
+			pinLA = _pinLA;
+			pinLB = _pinLB;
 
-        int getRightCount(){
+			attachInterrupt(pinRA, R_A_RISE, RISING);
+			attachInterrupt(pinRB, R_B_RISE, RISING);
+
+			attachInterrupt(pinLA, L_A_RISE, RISING);
+			attachInterrupt(pinLB, L_B_RISE, RISING);
+			instance = this;
+		}
+
+		int getRightCount(){
 			return RightCount;
-        }
-        int getLeftCount(){
-        	return LeftCount;
-        }
+		}
+		int getLeftCount(){
+			return LeftCount;
+		}
 
 		int getPinRA(){
-			return PIN_R_A;
+			return pinRA;
 		}
 
 		int getPinRB(){
-			return PIN_R_B;
+			return pinRB;
 		}
 
 		int getPinLA(){
-			return PIN_L_A;
+			return pinLA;
 		}
 
 		int getPinLB(){
-			return PIN_L_B;
+			return pinLB;
 		}
 		
 
-        void switchPressed(int pin, int rise){
-            detachInterrupt(pin);
-            if(pin == PIN_R_A){
-            	R_A_SIG = rise;
-            	if(R_B_SIG == rise){
-            		RightCount--;
-            	}else{
-            		RightCount++;
-            	}
-            	if(rise){
-            		attachInterrupt(pin, R_A_FALL, FALLING);
-            	}else{
-            		attachInterrupt(pin, R_A_RISE, RISING);
-            	}
-            }else if(pin == PIN_R_B){
-            	R_B_SIG = rise;
-            	if(R_A_SIG == rise){
-            		RightCount++;
-            	}else{
-            		RightCount--;
-            	}
-            	if(rise){
-            		attachInterrupt(pin, R_B_FALL, FALLING);
-            	}else{
-            		attachInterrupt(pin, R_B_RISE, RISING);
-            	}
-            }else if(pin == PIN_L_A){
-            	L_A_SIG = rise;
-            	if(L_B_SIG == rise){
-            		LeftCount--;
-            	}else{
-            		LeftCount++;
-            	}
-            	if(rise){
-            		attachInterrupt(pin, L_A_FALL, FALLING);
-            	}else{
-            		attachInterrupt(pin, L_A_RISE, RISING);
-            	}
-            }else if(pin == PIN_L_B){
-            	L_B_SIG = rise;
-            	if(L_A_SIG == rise){
-            		LeftCount++;
-            	}else{
-            		LeftCount--;
-            	}
-            	if(rise){
-            		attachInterrupt(pin, L_B_FALL, FALLING);
-            	}else{
-            		attachInterrupt(pin, L_B_RISE, RISING);
-            	}
-            }
-        }
+		void switchPressed(int pin, int rise){
+			detachInterrupt(pin);
+			if(pin == pinRA){
+				R_A_SIG = rise;
+				if(R_B_SIG == rise){
+					RightCount--;
+				}else{
+					RightCount++;
+				}
+				if(rise){
+					attachInterrupt(pin, R_A_FALL, FALLING);
+				}else{
+					attachInterrupt(pin, R_A_RISE, RISING);
+				}
+			}else if(pin == pinRB){
+				R_B_SIG = rise;
+				if(R_A_SIG == rise){
+					RightCount++;
+				}else{
+					RightCount--;
+				}
+				if(rise){
+					attachInterrupt(pin, R_B_FALL, FALLING);
+				}else{
+					attachInterrupt(pin, R_B_RISE, RISING);
+				}
+			}else if(pin == pinLA){
+				L_A_SIG = rise;
+				if(L_B_SIG == rise){
+					LeftCount--;
+				}else{
+					LeftCount++;
+				}
+				if(rise){
+					attachInterrupt(pin, L_A_FALL, FALLING);
+				}else{
+					attachInterrupt(pin, L_A_RISE, RISING);
+				}
+			}else if(pin == pinLB){
+				L_B_SIG = rise;
+				if(L_A_SIG == rise){
+					LeftCount++;
+				}else{
+					LeftCount--;
+				}
+				if(rise){
+					attachInterrupt(pin, L_B_FALL, FALLING);
+				}else{
+					attachInterrupt(pin, L_B_RISE, RISING);
+				}
+			}
+		}
 
 };

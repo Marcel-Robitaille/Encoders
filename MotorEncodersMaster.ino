@@ -1,7 +1,6 @@
 #include "Encoders.h"
 Encoders * Encoders::instance = NULL;
 
-// instances of our class
 Encoders encoders;
 
 void setup (){

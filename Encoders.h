@@ -1,5 +1,4 @@
 class Encoders{
-    volatile bool switchChanged;
     long RightCount, R_A_SIG=0, R_B_SIG=1;
     long LeftCount,  L_A_SIG=0, L_B_SIG=1;
 
@@ -69,6 +68,8 @@ class Encoders{
                     break;
 
                 case 1: //Left
+                	PIN_L_A = pinA;
+                	PIN_L_B = pinB;
                     attachInterrupt(pinA, L_A_RISE, RISING);
                     attachInterrupt(pinB, L_B_RISE, RISING);
                     instances [1] = this;
